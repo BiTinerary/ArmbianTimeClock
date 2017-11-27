@@ -38,8 +38,6 @@ GPIO.setmode(GPIO.BOARD)
 GPIO.setup(redLedPin, GPIO.OUT)
 GPIO.setup(greenLedPin, GPIO.OUT)
 
-ledThread = threading.Thread(target=blink, args=(, times))
-
 #try:
 if dtNow.time() < datetime.time(12):
 	timeCard("CLOCKIN", employeeName, punchDayTime)
