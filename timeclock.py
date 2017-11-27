@@ -1,6 +1,5 @@
 import OPi.GPIO as GPIO
-import threading, time, sys
-import datetime
+import threading, datetime, time, sys
 
 employeeName = sys.argv[1]
 dtNow = datetime.datetime.now()
@@ -52,30 +51,3 @@ elif dtNow.time() > datetime.time(12):
 
 #except:
 #	threading.Thread(target=blink, args=(redLedPin, 25)).start()
-
-#punchDay = dtNow.strftime("%m-%d-%Y")
-#punchTime = dtNow.strftime("%H:%M")
-
-"""
-def clockIn(employee):
-	with open("%s-%s.csv" % (employee, dtPunchDay), 'a+') as employeeLogFile:
-		clockInData = "CLOCKIN, %s, %s\n" % (dtPunchDay, dtPunchTime)
-		employeeLogFile.write(clockInData)
-	employeeLogFile.close()
-
-	MasterLog(employee, clockInData)
-
-	print "%s punched in on %s at %s" % (employee, dtPunchDay, dtPunchTime)
-	blink(greenLed, 3)
-
-def clockOut(employee):
-	with open("%s-%s.csv" % (employee, dtPunchDay), 'a+') as employeeLogFile:
-		clockOutData = "CLOCKOUT, %s, %s\n" % (dtPunchDay, dtPunchTime)
-		employeeLogFile.write(clockOutData)
-	employeeLogFile.close()
-
-	MasterLog(employee, clockOutData)
-
-	print "%s punched out on %s at %s" % (employee, dtPunchDay, dtPunchTime)
-	blink(greenLed, 9)
-"""
