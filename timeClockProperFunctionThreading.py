@@ -1,4 +1,5 @@
 import OPi.GPIO as GPIO
+from blinky import *
 import threading, datetime, time, sys, os
 
 employeeName = sys.argv[1]
@@ -6,28 +7,6 @@ redLedPin = 7
 greenLedPin = 15
 dtNow = datetime.datetime.now()
 punchDayTime = [dtNow.strftime("%m-%d-%Y"), dtNow.strftime("%H:%M")]
-
-def blink(color, times):
-        def onOff(color):
-                ledOn = os.system('echo 1 >/sys/class/leds/%s_led/brightness' % color)
-                time.sleep(.1)
-                ledOff = os.system('echo 0 >/sys/class/leds/%s_led/brightness' % color)
-                time.sleep(.1)
-
-        for x in range(times):
-                try:
-                        if len(color) == 2:
-                                for redGreen in color:
-                                        onOff(redGreen)
-                except:
-                        color = int(color)
-                        GPIO.setmode(GPIO.BOARD)
-                        GPIO.setup(color, GPIO.OUT)
-                        time.sleep(.2)
-                        GPIO.output(color, GPIO.HIGH)
-                        time.sleep(.2)
-                        GPIO.output(color, GPIO.LOW)
-                        GPIO.cleanup()
 
 def MasterLog(employee, data): ## GOOGLE API CREDZ PARAM
         with open('MasterTimeClockLog.csv', 'a+') as MasterLog:
