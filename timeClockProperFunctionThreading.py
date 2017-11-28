@@ -19,10 +19,11 @@ def blink(color, times):
                 time.sleep(.1)
 
         for x in range(times):
-                if len(color) == 2:
-                        for redGreen in color:
-                                onOff(redGreen)
-                else:
+                try:
+                        if len(color) == 2:
+                                for redGreen in color:
+                                        onOff(redGreen)
+                except:
                         GPIO.cleanup()
                         time.sleep(.2)
                         GPIO.output(greenLedPin, GPIO.HIGH)
