@@ -31,7 +31,7 @@ def blink(color, times):
 
 def MasterLog(employee, data): ## GOOGLE API CREDZ PARAM
         with open('MasterTimeClockLog.csv', 'a+') as MasterLog:
-                MasterLog.write("%s, %s\n" % (employee, data))
+                MasterLog.write("%s, %s" % (employee, data))
         MasterLog.close()
         print 'Master Log Written Succesfully!'
         
