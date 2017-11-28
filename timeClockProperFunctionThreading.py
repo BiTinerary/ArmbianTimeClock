@@ -3,8 +3,6 @@ from blinky import *
 import threading, datetime, time, sys, os
 
 employeeName = sys.argv[1]
-redLedPin = 7
-greenLedPin = 15
 dtNow = datetime.datetime.now()
 punchDayTime = [dtNow.strftime("%m-%d-%Y"), dtNow.strftime("%H:%M")]
 
@@ -36,6 +34,8 @@ def threadFunction(func, array):
         return threading.Thread(target=func, args=(array))
 
 def everySwipe():
+        redLedPin = 7
+        greenLedPin = 15
         
         try:
                 if dtNow.time() < datetime.time(12):
