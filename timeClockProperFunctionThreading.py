@@ -61,7 +61,7 @@ elif dtNow.time() > datetime.time(12):
         actionThread = threadFunction(timeCard, action)
         ledThread = threadFunction(blink, [greenLedPin, 7])
 
-action.start()
+actionThread.start()
 ledThread.start()
 actionThread.join()
 ledThread.join()
