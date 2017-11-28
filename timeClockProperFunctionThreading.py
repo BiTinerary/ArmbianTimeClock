@@ -41,12 +41,10 @@ def everySwipe():
         try:
                 if dtNow.time() < datetime.time(12):
                         punch = ["CLOCKIN", employeeName, punchDayTime]
-                        #actionThread = threadFunction(timeCard, action).start()
                         ledThread = threadFunction(blink, [greenLedPin, 3])
 
                 elif dtNow.time() > datetime.time(12):
                         punch = ["CLOCKOUT", employeeName, punchDayTime]            
-                        #actionThread = threadFunction(timeCard, action).start
                         ledThread = threadFunction(blink, [greenLedPin, 6])
 
                 timeCard(punch)
