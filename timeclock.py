@@ -1,51 +1,54 @@
 import OPi.GPIO as GPIO
-import threading, datetime, time, sys
+from blinky import *
+from threading import Thread
+import datetime, time, sys, os
 
-employeeName = sys.argv[1]
-dtNow = datetime.datetime.now()
-punchDayTime = [dtNow.strftime("%m-%d-%Y"), dtNow.strftime("%H:%M")]
-redLedPin = 22
-greenLedPin = 18
+def MasterLog(employee, data): ## GOOGLE API CREDZ PARAM
+        with open('MasterTimeClockLog.csv', 'a+') as MasterLog:
+                MasterLog.write("%s, %s" % (employee, data))
+        MasterLog.close()
+        print 'Master Log Written Succesfully!'
+        
+        ## PARSE MASTERLOG FOR HUMAN VIEWING
+        ## CREATE MASTER SHEET
+        ## GOOGLE CREDZ API, PUNCH GSHEET WITH MASTER SHEET 
+        
+        blink(['red', 'green'], 3)
 
-def blink(color, times):
-	for x in xrange(times):
-		GPIO.cleanup() # Run first in case multiple RFID scans within length of this threads.
-		time.sleep(.2) # ^ Only be applicable if erroring out, not for standard clock in/out thread ^
-		GPIO.output(color, GPIO.HIGH)
-		time.sleep(.2)
-		GPIO.output(color, GPIO.LOW)
+def timeCard(punch):
+        action, employee, data = punch[0], punch[1], punch[2]
+        
+        with open("%s.csv" % (employee), 'a+') as employeeLogFile:
+                timeCardData = "%s, %s, %s\n" % (action, data[0], data[1])
+                employeeLogFile.write(timeCardData)
+        employeeLogFile.close()
 
-def MasterLog(employee, data):
-	with open('MasterTimeClockLog.csv', 'a+') as MasterLog:
-		MasterLog.write("%s, %s\n" % (employee, data))
-	MasterLog.close()
+        MasterLogThread = threadFunction(MasterLog, [employee, timeCardData]) ## GOOGLE API CREDZ PARAM
+        MasterLogThread.start()
+        print "%s %s on %s at %s" % (employee, action, data[0], data[1])
 
-	for i in range(2):
-		blink(redLedPin)
-		blink(greenLedPin)
+def threadFunction(func, array):
+        return Thread(target=func, args=(array))
 
-def timeCard(action, employee, data):
-	with open("%s.csv" % (employee), 'a+') as employeeLogFile:
-		timeCardData = "%s, %s, %s\n" % (action, data[0], data[1])
-		employeeLogFile.write(timeCardData)
-	employeeLogFile.close()
+def everySwipe():
+        employeeName = sys.argv[1]
+        dtNow = datetime.datetime.now()
+        punchDayTime = [dtNow.strftime("%m-%d-%Y"), dtNow.strftime("%H:%M")]
+        
+        redLedPin = 7
+        greenLedPin = 15
+        
+        try:
+                if dtNow.time() < datetime.time(12):
+                        punch = ["CLOCKIN", employeeName, punchDayTime]
+                        ledThread = threadFunction(blink, [greenLedPin, 3])
 
-	MasterLog(employee, timeCardData)
+                elif dtNow.time() > datetime.time(12):
+                        punch = ["CLOCKOUT", employeeName, punchDayTime]            
+                        ledThread = threadFunction(blink, [greenLedPin, 6])
 
-	print "%s %s on %s at %s" % (employee, action, data[0], data[1])
-
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(redLedPin, GPIO.OUT)
-GPIO.setup(greenLedPin, GPIO.OUT)
-
-#try:
-if dtNow.time() < datetime.time(12):
-	timeCard("CLOCKIN", employeeName, punchDayTime)
-	threading.Thread(target=blink, args=(greenLedPin, 3)).start()
-
-elif dtNow.time() > datetime.time(12):
-	timeCard("CLOCKOUT", employeeName, punchDayTime)
-	threading.Thread(target=blink, args=(greenLedPin, 7)).start()
-
-#except:
-#	threading.Thread(target=blink, args=(redLedPin, 25)).start()
+                timeCard(punch)
+                ledThread.start()
+        except:
+                blink(redLedPin, 9999)
+everySwipe()  
