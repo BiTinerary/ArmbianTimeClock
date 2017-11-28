@@ -24,11 +24,12 @@ def blink(color, times):
                                 for redGreen in color:
                                         onOff(redGreen)
                 except:
+                        color = int(color)
                         GPIO.cleanup()
                         time.sleep(.2)
-                        GPIO.output(greenLedPin, GPIO.HIGH)
+                        GPIO.output(color, GPIO.HIGH)
                         time.sleep(.2)
-                        GPIO.output(greenLedPin, GPIO.LOW)
+                        GPIO.output(color, GPIO.LOW)
 
 def MasterLog(employee, data):
         with open('MasterTimeClockLog.csv', 'a+') as MasterLog:
