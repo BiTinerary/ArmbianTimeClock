@@ -2,9 +2,6 @@ import OPi.GPIO as GPIO
 from blinky import *
 import threading, datetime, time, sys, os
 
-employeeName = sys.argv[1]
-dtNow = datetime.datetime.now()
-punchDayTime = [dtNow.strftime("%m-%d-%Y"), dtNow.strftime("%H:%M")]
 
 def MasterLog(employee, data): ## GOOGLE API CREDZ PARAM
         with open('MasterTimeClockLog.csv', 'a+') as MasterLog:
@@ -34,6 +31,10 @@ def threadFunction(func, array):
         return threading.Thread(target=func, args=(array))
 
 def everySwipe():
+        employeeName = sys.argv[1]
+        dtNow = datetime.datetime.now()
+        punchDayTime = [dtNow.strftime("%m-%d-%Y"), dtNow.strftime("%H:%M")]
+        
         redLedPin = 7
         greenLedPin = 15
         
