@@ -5,9 +5,6 @@ employeeName = sys.argv[1]
 dtNow = datetime.datetime.now()
 punchDayTime = [dtNow.strftime("%m-%d-%Y"), dtNow.strftime("%H:%M")]
 
-redLedPin = 7
-greenLedPin = 15
-
 def blink(color, times):
         def onOff(color):
                 ledOn = os.system('echo 1 >/sys/class/leds/%s_led/brightness' % color)
@@ -51,17 +48,24 @@ def timeCard(action, employee, data):
 def threadFunction(func, array):
         return threading.Thread(target=func, args=(array))
 
-if dtNow.time() < datetime.time(12):
-        action = ["CLOCKIN", employeeName, punchDayTime]
-        actionThread = threadFunction(timeCard, action).start()
-        ledThread = threadFunction(blink, [greenLedPin, 3])
+def everySwipe():
+        redLedPin = 7
+        greenLedPin = 15
 
-elif dtNow.time() > datetime.time(12):
-        action = ["CLOCKOUT", employeeName, punchDayTime]
-        actionThread = threadFunction(timeCard, action).start
-        ledThread = threadFunction(blink, [greenLedPin, 6])
+        try:
+                if dtNow.time() < datetime.time(12):
+                        action = ["CLOCKIN", employeeName, punchDayTime]
+                        actionThread = threadFunction(timeCard, action).start()
+                        ledThread = threadFunction(blink, [greenLedPin, 3])
 
-actionThread.start()
-ledThread.start()
-actionThread.join()
-ledThread.join()
+                elif dtNow.time() > datetime.time(12):
+                        action = ["CLOCKOUT", employeeName, punchDayTime]
+                        actionThread = threadFunction(timeCard, action).start
+                        ledThread = threadFunction(blink, [greenLedPin, 6])
+
+                actionThread.start()
+                ledThread.start()
+                actionThread.join()
+                ledThread.join()
+        except:
+                blink(redLedPin, 9999)
