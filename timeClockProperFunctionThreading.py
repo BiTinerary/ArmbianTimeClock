@@ -7,9 +7,6 @@ punchDayTime = [dtNow.strftime("%m-%d-%Y"), dtNow.strftime("%H:%M")]
 
 redLedPin = 12
 greenLedPin = 16
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(redLedPin, GPIO.OUT)
-GPIO.setup(greenLedPin, GPIO.OUT)
 
 def blink(color, times):
         def onOff(color):
@@ -25,11 +22,13 @@ def blink(color, times):
                                         onOff(redGreen)
                 except:
                         color = int(color)
-                        GPIO.cleanup()
+                        GPIO.setmode(GPIO.BOARD)
+                        GPIO.setup(color, GPIO.OUT)
                         time.sleep(.2)
                         GPIO.output(color, GPIO.HIGH)
                         time.sleep(.2)
                         GPIO.output(color, GPIO.LOW)
+                        GPIO.cleanup()
 
 def MasterLog(employee, data):
         with open('MasterTimeClockLog.csv', 'a+') as MasterLog:
@@ -52,22 +51,17 @@ def timeCard(action, employee, data):
 def threadFunction(func, array):
         return threading.Thread(target=func, args=(array))
 
-#while True:
-#try:
 if dtNow.time() < datetime.time(12):
         action = ["CLOCKIN", employeeName, punchDayTime]
         actionThread = threadFunction(timeCard, action).start()
-        blink(greenLedPin, 3)
-        #ledThread = threadFunction(blink, [greenLedPin, 3])
+        ledThread = threadFunction(blink, [greenLedPin, 3])
 
 elif dtNow.time() > datetime.time(12):
         action = ["CLOCKOUT", employeeName, punchDayTime]
         actionThread = threadFunction(timeCard, action).start
-        blink(greenLedPin, 7)
-        #ledThread = threadFunction(blink, [greenLedPin, 7])
+        ledThread = threadFunction(blink, [greenLedPin, 6])
 
-#actionThread.start()
-#ledThread.start()
-#actionThread.join()
-#ledThread.join()
-#except:
+actionThread.start()
+ledThread.start()
+actionThread.join()
+ledThread.join()
