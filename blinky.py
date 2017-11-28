@@ -2,7 +2,7 @@ import OPi.GPIO as GPIO
 import time, os
 
 def blink(color, times):
-        def onBoardLEDs(color):
+        def onboardLEDs(color):
                 ledOn = os.system('echo 1 >/sys/class/leds/%s_led/brightness' % color)
                 time.sleep(.1)
                 ledOff = os.system('echo 0 >/sys/class/leds/%s_led/brightness' % color)
