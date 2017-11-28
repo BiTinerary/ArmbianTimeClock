@@ -5,8 +5,8 @@ employeeName = sys.argv[1]
 dtNow = datetime.datetime.now()
 punchDayTime = [dtNow.strftime("%m-%d-%Y"), dtNow.strftime("%H:%M")]
 
-redLedPin = 12
-greenLedPin = 16
+redLedPin = 7
+greenLedPin = 15
 
 def blink(color, times):
         def onOff(color):
