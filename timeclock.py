@@ -17,8 +17,12 @@ def MasterLog(employee, data): ## GOOGLE API CREDZ PARAM
 
 def timeCard(punch):
         action, employee, data = punch[0], punch[1], punch[2]
+        directory = 'TimeCards'
         
-        with open("%s.csv" % (employee), 'a+') as employeeLogFile:
+        if not os.path.exists(directory):
+                os.makedirs(directory)
+                
+        with open("%s/%s.csv" % (directory, employee), 'a+') as employeeLogFile:
                 timeCardData = "%s, %s, %s\n" % (action, data[0], data[1])
                 employeeLogFile.write(timeCardData)
         employeeLogFile.close()
