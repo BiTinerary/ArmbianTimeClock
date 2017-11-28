@@ -1,7 +1,7 @@
 import OPi.GPIO as GPIO
 from blinky import *
-#from threading import Thread
-import threading, datetime, time, sys, os
+from threading import Thread
+import datetime, time, sys, os
 
 def MasterLog(employee, data): ## GOOGLE API CREDZ PARAM
         with open('MasterTimeClockLog.csv', 'a+') as MasterLog:
@@ -28,7 +28,7 @@ def timeCard(punch):
         print "%s %s on %s at %s" % (employee, action, data[0], data[1])
 
 def threadFunction(func, array):
-        return threading.Thread(target=func, args=(array))
+        return Thread(target=func, args=(array))
 
 def everySwipe():
         employeeName = sys.argv[1]
