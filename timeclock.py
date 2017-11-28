@@ -5,7 +5,7 @@ import datetime, time, sys, os
 
 def MasterLog(employee, data): ## GOOGLE API CREDZ PARAM
         with open('MasterTimeClockLog.csv', 'a+') as MasterLog:
-                MasterLog.write("%s, %s" % (employee, data))
+                MasterLog.write("%s,%s" % (employee, data))
         MasterLog.close()
         print 'Master Log Written Succesfully!'
         
@@ -23,7 +23,7 @@ def timeCard(punch):
                 os.makedirs(directory)
                 
         with open("%s/%s.csv" % (directory, employee), 'a+') as employeeLogFile:
-                timeCardData = "%s, %s, %s\n" % (action, data[0], data[1])
+                timeCardData = "%s,%s,%s\n" % (action, data[0], data[1])
                 employeeLogFile.write(timeCardData)
         employeeLogFile.close()
 
