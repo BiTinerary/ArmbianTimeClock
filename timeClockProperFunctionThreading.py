@@ -43,7 +43,8 @@ def timeCard(action, employee, data):
                 employeeLogFile.write(timeCardData)
         employeeLogFile.close()
 
-        threadFunction(MasterLog, [employee, timeCardData])
+        MasterLogThread = threadFunction(MasterLog, [employee, timeCardData])
+        MasterLogThread.start()
         print "%s %s on %s at %s" % (employee, action, data[0], data[1])
 
 def threadFunction(func, array):
