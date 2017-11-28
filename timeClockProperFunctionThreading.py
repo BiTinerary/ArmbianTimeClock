@@ -61,8 +61,8 @@ elif dtNow.time() > datetime.time(12):
         threadFunction(timeCard, punchOut)
         threadFunction(blink, [greenLedPin, 7])
 
-    action.start()
-    ledThread.start()
-    actionThread.join()
-    ledThread.join()
+action.start()
+ledThread.start()
+actionThread.join()
+ledThread.join()
 #except:
