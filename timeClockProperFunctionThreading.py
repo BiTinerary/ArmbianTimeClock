@@ -2,7 +2,6 @@ import OPi.GPIO as GPIO
 from blinky import *
 import threading, datetime, time, sys, os
 
-
 def MasterLog(employee, data): ## GOOGLE API CREDZ PARAM
         with open('MasterTimeClockLog.csv', 'a+') as MasterLog:
                 MasterLog.write("%s, %s" % (employee, data))
