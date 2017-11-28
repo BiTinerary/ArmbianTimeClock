@@ -51,18 +51,18 @@ def threadFunction(func, array):
 
 #while True:
 #try:
-    if dtNow.time() < datetime.time(12):
-            action = ["CLOCKIN", employeeName, punchDayTime]
-            actionThread = threadFunction(timeCard, punchIn)
-            ledThread = threadFunction(blink, [greenLedPin, 3])
+if dtNow.time() < datetime.time(12):
+        action = ["CLOCKIN", employeeName, punchDayTime]
+        actionThread = threadFunction(timeCard, punchIn)
+        ledThread = threadFunction(blink, [greenLedPin, 3])
 
-    elif dtNow.time() > datetime.time(12):
-            action = ["CLOCKOUT", employeeName, punchDayTime]
-            threadFunction(timeCard, punchOut)
-            threadFunction(blink, [greenLedPin, 7])
+elif dtNow.time() > datetime.time(12):
+        action = ["CLOCKOUT", employeeName, punchDayTime]
+        threadFunction(timeCard, punchOut)
+        threadFunction(blink, [greenLedPin, 7])
 
-        action.start()
-        ledThread.start()
-        actionThread.join()
-        ledThread.join()
+    action.start()
+    ledThread.start()
+    actionThread.join()
+    ledThread.join()
 #except:
