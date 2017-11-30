@@ -30,19 +30,19 @@ def getCoordOfToday(worksheet): #pass specially formatted datetime to row/column
 def militaryTimestamp(): # return current time. For clock in/out stamp.
 	return datetime.datetime.now().strftime('%H:%M')
 
-def clockInCell(name, sheet, worksheet): # the final goods! line 61 is google API command being passed, coordinates of cell with todays date, employee column and current time.
+def clockInCell(name, worksheet): # the final goods! line 61 is google API command being passed, coordinates of cell with todays date, employee column and current time.
 	employeesColumn = getRowColumn(name, worksheet)[1] # get row/column coordinates of employee who is punching time card.
 	worksheet.update_cell(getCoordOfToday(worksheet)[0], employeesColumn, militaryTimestamp()) # passing column of cell, row of cell, and what to update it with.
 	namePunchAction = 'Name: %s\nDate: %s\nTime: %s\nAction: ClockIn\n' % (name, today.strftime('%m/%d/%y'), militaryTimestamp())
 	return namePunchAction
 
-def clockOutCell(name, sheet, worksheet): # Final goods, for clock out.
+def clockOutCell(name, worksheet): # Final goods, for clock out.
 	employeesColumn = int(getRowColumn(name, worksheet)[1]) + 1 # Same as clock in but plus one. eg. Clock in is on column 5, clock out is column 6. 
 	worksheet.update_cell(getCoordOfToday(worksheet)[0], employeesColumn, militaryTimestamp())
 	namePunchAction = 'Name: %s\nDate: %s\nTime: %s\nAction: ClockOut\n' % (name, today.strftime('%m/%d/%y'), militaryTimestamp())
 	return namePunchAction
 
-def clock(inOut, name, sheet, worksheet):
+def clock(inOut, name, worksheet):
 	if inOut == 'CLOCKIN':
 		return clockInCell(name, sheet, worksheet)
 	elif inOut == 'CLOCKOUT':
@@ -55,7 +55,7 @@ def gSheetPunch(sheetInput, employee, action):
 	sheet = gc.open(sheetInput)
 	worksheet = sheet.get_worksheet(0) # process, work on the first tab within above spreadsheet.
 	#try:
-	print clock(action, employee, sheet, worksheet)
+	print clock(action, employee, worksheet)
 	#except:
 	#	print "Date Not Found! Newest Spreadsheet available?"
 	#	print "Writing to log"
