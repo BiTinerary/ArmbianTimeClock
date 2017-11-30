@@ -35,9 +35,7 @@ def timeCard(punch):
 def threadFunction(func, array):
         return Thread(target=func, args=(array))
 
-def everySwipe():
-        employeeName = sys.argv[1]
-        deptSheet = sys.argv[2]
+def mainSwipe(deptSheet, employeeName):
         
         dtNow = datetime.datetime.now()
         punchDayTime = [dtNow.strftime("%m-%d-%Y"), dtNow.strftime("%H:%M")]
@@ -58,4 +56,6 @@ def everySwipe():
                 ledThread.start()
         except:
                 blink(redLedPin, 10)
-everySwipe()  
+
+if __name__ == '__main__':
+        mainSwipe(sys.argv[1], sys.argv[2])  
