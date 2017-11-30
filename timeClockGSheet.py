@@ -27,7 +27,7 @@ def timeCard(punch):
         MasterLogThread.start()
         
         try:
-                gSheetPunch(dept, action, employee)
+                gSheetPunch(deptSheet, employee, action)
         except:
                 blink(redLedPin, 10)
         print "%s %s on %s at %s" % (employee, action, data[0], data[1])
