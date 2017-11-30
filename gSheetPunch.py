@@ -4,6 +4,13 @@ from oauth2client.service_account import ServiceAccountCredentials
 today = datetime.date.today()
 apiCreds = 'MiscScripts-50022bf06964.json'
 
+def militaryTimestamp(): # return current time. For clock in/out stamp.
+	return datetime.datetime.now().strftime('%H:%M')
+
+def getCoordOfToday(worksheet): #pass specially formatted datetime to row/column function. Which gets coordinates of cell corresponding to todays date.
+	todayToTuple = getRowColumn(worksheet, str(today.strftime('X%m/X%d/20%y').replace('X0', '').replace('X', '')))
+	return todayToTuple
+
 def getRowColumn(worksheet, employee): # ugly code for stripping/regex/parsing hardcoded info from the google sheets. # 
 	findRegex = str(worksheet.find(employee))
 	stringy = "'" #google response fluff
@@ -21,13 +28,6 @@ def getRowColumn(worksheet, employee): # ugly code for stripping/regex/parsing h
 	justTheColInt = str(finalColumnLocation).lstrip('C')
 	
 	return int(justTheRowInt), int(justTheColInt) # return row, column tuple of found/matched cells corresponding to employee name, and todays date on the spreadsheet.
-
-def getCoordOfToday(worksheet): #pass specially formatted datetime to row/column function. Which gets coordinates of cell corresponding to todays date.
-	todayToTuple = getRowColumn(worksheet, str(today.strftime('X%m/X%d/20%y').replace('X0', '').replace('X', '')))
-	return todayToTuple
-
-def militaryTimestamp(): # return current time. For clock in/out stamp.
-	return datetime.datetime.now().strftime('%H:%M')
 
 def clockInCell(worksheet, employee): # the final goods! line 61 is google API command being passed, coordinates of cell with todays date, employee column and current time.
 	employeesColumn = getRowColumn(worksheet, employee)[1] # get row/column coordinates of employee who is punching time card.
