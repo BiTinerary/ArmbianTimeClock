@@ -48,7 +48,7 @@ def clock(inOut, name, sheet, worksheet):
 	elif inOut == 'CLOCKOUT':
 		return clockOutCell(name, sheet, worksheet)
 
-def main(sheetInput, action, employee):
+def gSheetPunch(sheetInput, employee, action):
 	scope = ['https://spreadsheets.google.com/feeds']
 	credentials = ServiceAccountCredentials.from_json_keyfile_name(apiCreds, scope)
 	gc = gspread.authorize(credentials)
