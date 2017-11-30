@@ -13,3 +13,4 @@ A Google Sheet punching timeclock made from an MFRC522 module/tags, OrangePi Zer
   * `pip install oauth2client`
 
 ## Installation
+To be simplified and condensed at a later date.
