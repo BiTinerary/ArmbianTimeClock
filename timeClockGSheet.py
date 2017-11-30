@@ -30,7 +30,8 @@ def timeCard(punch):
         MasterLogThread.start()
         
         try:
-                threadFunction(gSheetPunch, [worksheet, employee, action])
+                gSheetThread = threadFunction(gSheetPunch, [worksheet, employee, action])
+                gSheetThread.start()
         except:
                 blink(redLedPin, 10)
         print "%s %s on %s at %s" % (employee, action, data[0], data[1])
