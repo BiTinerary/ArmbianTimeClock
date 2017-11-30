@@ -12,7 +12,7 @@ def MasterLog(employee, data): ## GOOGLE API CREDZ PARAM
         blink(['red', 'green'], 3)
 
 def timeCard(punch):
-        deptSheet, employee, data, action = punch[0], punch[1], punch[2], punch[3]
+        worksheet, employee, data, action = punch[0], punch[1], punch[2], punch[3]
         directory = 'TimeCards'
         
         if not os.path.exists(directory):
@@ -27,7 +27,7 @@ def timeCard(punch):
         MasterLogThread.start()
         
         try:
-                gSheetPunch(deptSheet, employee, action)
+                gSheetPunch(worksheet, employee, action)
         except:
                 blink(redLedPin, 10)
         print "%s %s on %s at %s" % (employee, action, data[0], data[1])
@@ -35,7 +35,7 @@ def timeCard(punch):
 def threadFunction(func, array):
         return Thread(target=func, args=(array))
 
-def mainSwipe(deptSheet, employeeName):
+def mainSwipe(worksheet, employee):
         
         dtNow = datetime.datetime.now()
         punchDayTime = [dtNow.strftime("%m-%d-%Y"), dtNow.strftime("%H:%M")]
@@ -45,11 +45,11 @@ def mainSwipe(deptSheet, employeeName):
         
         try:
                 if dtNow.time() < datetime.time(12):
-                        punch = [deptSheet, employeeName, punchDayTime, "CLOCKIN"]
+                        punch = [worksheet, employee, punchDayTime, "CLOCKIN"]
                         ledThread = threadFunction(blink, [greenLedPin, 3])
 
                 elif dtNow.time() > datetime.time(12):
-                        punch = [deptSheet, employeeName, punchDayTime, "CLOCKOUT"]            
+                        punch = [worksheet, employee, punchDayTime, "CLOCKOUT"]            
                         ledThread = threadFunction(blink, [greenLedPin, 6])
 
                 timeCard(punch)
