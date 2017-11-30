@@ -4,6 +4,9 @@ from gSheetPunch import *
 from threading import Thread
 import datetime, time, sys, os
 
+def threadFunction(func, array):
+        return Thread(target=func, args=(array))
+
 def MasterLog(employee, data): ## GOOGLE API CREDZ PARAM
         with open('MasterTimeClockLog.csv', 'a+') as MasterLog:
                 MasterLog.write("%s,%s" % (employee, data))
@@ -27,13 +30,11 @@ def timeCard(punch):
         MasterLogThread.start()
         
         try:
-                gSheetPunch(worksheet, employee, action)
+                threadFunction(gSheetPunch, [worksheet, employee, action])
         except:
                 blink(redLedPin, 10)
         print "%s %s on %s at %s" % (employee, action, data[0], data[1])
 
-def threadFunction(func, array):
-        return Thread(target=func, args=(array))
 
 def mainSwipe(worksheet, employee):
         
