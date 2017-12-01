@@ -8,7 +8,7 @@ def threadFunction(func, array):
         return Thread(target=func, args=(array))
 
 def MasterLog(employee, data): ## GOOGLE API CREDZ PARAM
-        with open('MasterTimeClockLog.csv', 'a+') as MasterLog:
+        with open('%s/MasterTimeClockLog.csv' % directory, 'a+') as MasterLog:
                 MasterLog.write("%s,%s" % (employee, data))
         MasterLog.close()
         print 'Master Log Written Succesfully!'
@@ -26,7 +26,7 @@ def timeCard(punch):
                 employeeLogFile.write(timeCardData)
         employeeLogFile.close()
 
-        MasterLogThread = threadFunction(MasterLog, [employee, timeCardData]) ## GOOGLE API CREDZ PARAM
+        MasterLogThread = threadFunction(MasterLog, [directory, employee, timeCardData]) ## GOOGLE API CREDZ PARAM
         MasterLogThread.start()
         
         try:
