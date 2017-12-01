@@ -1,6 +1,6 @@
-990-991-992-993, python timeClockGSheet.py 'Office Time Sheet' EMPLOYEE1
-991-992-993-994, python timeClockGSheet.py 'Office Time Sheet' EMPLOYEE2
-992-993-994-995, python timeClockGSheet.py 'Warehouse Time Sheet' EMPLOYEE3
-993-994-995-996, python timeClockGSheet.py 'Warehouse Time Sheet' EMPLOYEE4
-994-995-996-997, python timeClockGSheet.py 'Warehouse Time Sheet' EMPLOYEE5
-995-996-997-998, python timeClockGSheet.py 'Warehouse Time Sheet' EMPLOYEE6
+990-991-992-993, python timeClock.py 'Office Time Sheet' EMPLOYEE1
+991-992-993-994, python timeClock.py 'Office Time Sheet' EMPLOYEE2
+992-993-994-995, python timeClock.py 'Warehouse Time Sheet' EMPLOYEE3
+993-994-995-996, python timeClock.py 'Warehouse Time Sheet' EMPLOYEE4
+994-995-996-997, python timeClock.py 'Warehouse Time Sheet' EMPLOYEE5
+995-996-997-998, python timeClock.py 'Warehouse Time Sheet' EMPLOYEE6
